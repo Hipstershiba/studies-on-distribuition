@@ -42,6 +42,7 @@ class Graph {
             line(x, this.origin.y, x, this.origin.y - 5);
             noStroke();
             fill(0);
+            textAlign(CENTER);
             text(i, x, this.origin.y + 15);
             pop();
         }
@@ -50,7 +51,6 @@ class Graph {
         for (let i = 0; i <= 10; i++) {
             let y_resolution = this.height / 10;
             let y = this.origin.y - (i * y_resolution);
-            // let y = this.origin.y - i;
             push();
             stroke(0);
             strokeWeight(1);
@@ -58,6 +58,9 @@ class Graph {
             noStroke();
             fill(0);
             textAlign(RIGHT);
+            if (i > 0) {
+                y += 5;
+            }
             text(i / 10, this.origin.x - 8, y);
             pop();
         }

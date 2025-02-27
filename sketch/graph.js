@@ -47,5 +47,19 @@ class Graph {
         }
         // Y axis
         line(this.origin.x, this.origin.y, this.origin.x, this.origin.y - this.height);
+        for (let i = 0; i <= 10; i++) {
+            let y_resolution = this.height / 10;
+            let y = this.origin.y - (i * y_resolution);
+            // let y = this.origin.y - i;
+            push();
+            stroke(0);
+            strokeWeight(1);
+            line(this.origin.x, y, this.origin.x + 5, y);
+            noStroke();
+            fill(0);
+            textAlign(RIGHT);
+            text(i, this.origin.x - 8, y);
+            pop();
+        }
     }
 }

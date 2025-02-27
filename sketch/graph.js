@@ -4,18 +4,23 @@ class Graph {
             this.data_array = data_array;
         }
         catch (err) {
-            let error_msg = "Error: " + err;
-            console.log(error_msg);
             this.data_array = [1];
         }
+
+        // Default dimensions and positioning
+        let margin = 50;
+        let x = margin;
+        let y = height - margin;
+        this.origin = createVector(x, y);
+        this.width = width - margin;
+        this.height = margin;
+        this.size = createVector(this.width - this.origin.x, this.origin.y - this.height);
 
         this.data_length = this.data_array.length;
         this.min_value = min(this.data_array);
         this.max_value = max(this.data_array);
-        this.origin = createVector(0, 0);
-        this.scale(16);
 
-        this.resolution = this.width / (this.data_length - 1);
+        this.resolution = 100;
 
         this.normalized_data_values = this.normalize_data_values();
         this.mapped_data_array = this.create_mapped_data_array(this.normalized_data_values);
@@ -25,12 +30,10 @@ class Graph {
         this.origin.set(x, y);
     }
 
-    scale(scaleFactor) {
-        this.width = (width / scaleFactor) * (scaleFactor - 2);
-        this.height = (height / scaleFactor) * (scaleFactor - 2);
-        let x = width / scaleFactor;
-        let y = this.height + height / scaleFactor;
-        this.set_origin(x, y);
+    graphSize(width, height) {
+        this.size.set(width, height);
+        this.width = this.origin.x + this.size.x;
+        this.height = this.origin.y - this.size.y;
     }
 
     normalize_data_values() {
@@ -57,17 +60,17 @@ class Graph {
     }
 
     plot() {
-        let current_point = this.mapped_data_array[0];
-        for (let i = 1; i < this.data_length; i++) {
-            let previous_point = current_point;
-            current_point = this.mapped_data_array[i];
-            stroke(0);
-            strokeWeight(2);
-            line(previous_point.x, previous_point.y, current_point.x, current_point.y);
-            fill(0);
-            noStroke();
-            ellipse(current_point.x, current_point.y, 8, 8);
-        }
+        // let current_point = this.mapped_data_array[0];
+        // for (let i = 1; i < this.data_length; i++) {
+        //     let previous_point = current_point;
+        //     current_point = this.mapped_data_array[i];
+        //     stroke(0);
+        //     strokeWeight(2);
+        //     line(previous_point.x, previous_point.y, current_point.x, current_point.y);
+        //     fill(0);
+        //     noStroke();
+        //     ellipse(current_point.x, current_point.y, 8, 8);
+        // }
         this.draw_axis();
     }
 
@@ -76,9 +79,9 @@ class Graph {
         strokeWeight(2);
         noFill();
         // X axis
-        line(this.origin.x, this.origin.y, this.origin.x + this.width, this.origin.y);
+        line(this.origin.x, this.origin.y, this.width, this.origin.y);
         for (let i = 0; i < this.data_length; i++) {
-            let x = this.origin.x + (i * this.resolution);
+            let x = this.origin.x + (i * (this.size.x / 10));
             push();
             stroke(0);
             strokeWeight(1);
@@ -90,9 +93,9 @@ class Graph {
             pop();
         }
         // Y axis
-        line(this.origin.x, this.origin.y, this.origin.x, this.origin.y - this.height);
+        line(this.origin.x, this.origin.y, this.origin.x, this.height);
         for (let i = 0; i <= 10; i++) {
-            let y_resolution = this.height / 10;
+            let y_resolution = this.size.y / 10;
             let y = this.origin.y - (i * y_resolution);
             push();
             stroke(0);

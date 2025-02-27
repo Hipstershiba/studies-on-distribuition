@@ -12,13 +12,8 @@ class Graph {
         this.data_length = this.data_array.length;
         this.min_value = min(this.data_array);
         this.max_value = max(this.data_array);
-
-        let scaleFactor = 16;
-        this.width = (width / scaleFactor) * (scaleFactor - 2);
-        this.height = (height / scaleFactor) * (scaleFactor - 2);
-        let x = width / scaleFactor;
-        let y = this.height + height / scaleFactor;
-        this.origin = createVector(x, y);
+        this.origin = createVector(0, 0);
+        this.scale(16);
 
         this.resolution = this.width / (this.data_length - 1);
 
@@ -35,7 +30,7 @@ class Graph {
         this.height = (height / scaleFactor) * (scaleFactor - 2);
         let x = width / scaleFactor;
         let y = this.height + height / scaleFactor;
-        this.origin.set(x, y);
+        this.set_origin(x, y);
     }
 
     normalize_data_values() {

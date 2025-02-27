@@ -26,6 +26,18 @@ class Graph {
         this.mapped_data_array = this.create_mapped_data_array(this.normalized_data_values);
     }
 
+    set_origin(x, y) {
+        this.origin.set(x, y);
+    }
+
+    scale(scaleFactor) {
+        this.width = (width / scaleFactor) * (scaleFactor - 2);
+        this.height = (height / scaleFactor) * (scaleFactor - 2);
+        let x = width / scaleFactor;
+        let y = this.height + height / scaleFactor;
+        this.origin.set(x, y);
+    }
+
     normalize_data_values() {
         let normalized_value = this.data_array.map((value) => {
             return map(value, this.min_value, this.max_value, 0, 1);

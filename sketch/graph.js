@@ -58,7 +58,7 @@ class Graph {
             noStroke();
             fill(0);
             textAlign(RIGHT);
-            text(i, this.origin.x - 8, y);
+            text(i / 10, this.origin.x - 8, y);
             pop();
         }
     }

@@ -10,6 +10,8 @@ class Graph {
         }
 
         this.data_length = this.data_array.length;
+        this.min_value = min(this.data_array);
+        this.max_value = max(this.data_array);
 
         let scaleFactor = 16;
         this.width = (width / scaleFactor) * (scaleFactor - 2);
@@ -19,16 +21,50 @@ class Graph {
         this.origin = createVector(x, y);
 
         this.resolution = this.width / (this.data_length - 1);
+
+        this.normalized_data_values = this.normalize_data_values();
+        this.mapped_data_array = this.create_mapped_data_array(this.normalized_data_values);
+    }
+
+    normalize_data_values() {
+        let normalized_value = this.data_array.map((value) => {
+            return map(value, this.min_value, this.max_value, 0, 1);
+        });
+        return normalized_value;
+    }
+
+    map_data_point_to_graph(value, index) {
+        let x = this.origin.x + (index * this.resolution);
+        let y = map(value, 0, 1, this.origin.y, this.origin.y - this.height);
+        let mapped_data_point = createVector(x, y);
+        return mapped_data_point;
+    }
+
+    create_mapped_data_array(values) {
+        let mapped_data_array = [];
+        for (let i = 0; i < this.data_length; i++) {
+            let mapped_data_point = this.map_data_point_to_graph(values[i], i);
+            mapped_data_array.push(mapped_data_point);
+        }
+        return mapped_data_array;
     }
 
     plot() {
-        for (let i = 0; i < this.data_length; i++) {
-            // return 0;
+        let current_point = this.mapped_data_array[0];
+        for (let i = 1; i < this.data_length; i++) {
+            let previous_point = current_point;
+            current_point = this.mapped_data_array[i];
+            stroke(0);
+            strokeWeight(2);
+            line(previous_point.x, previous_point.y, current_point.x, current_point.y);
+            fill(0);
+            noStroke();
+            ellipse(current_point.x, current_point.y, 8, 8);
         }
-        this.draw_graph();
+        this.draw_axis();
     }
 
-    draw_graph() {
+    draw_axis() {
         stroke(0);
         strokeWeight(2);
         noFill();

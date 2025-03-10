@@ -14,9 +14,9 @@ function setup() {
   background(220);
   graph.plot();
 
-  sliderX = createSlider(0, width, width - 40);
+  sliderX = createSlider(0, width, width - 100);
   sliderX.position(20, 20);
-  sliderY = createSlider(0, height, 200);
+  sliderY = createSlider(0, height, height - 100);
   sliderY.position(20, 50);
 
 }

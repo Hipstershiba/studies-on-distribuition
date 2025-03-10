@@ -80,7 +80,7 @@ class Graph {
         noFill();
         // X axis
         line(this.origin.x, this.origin.y, this.width, this.origin.y);
-        for (let i = 0; i < this.data_length; i++) {
+        for (let i = 0; i <= 10; i++) {
             let x = this.origin.x + (i * (this.size.x / 10));
             push();
             stroke(0);
@@ -89,7 +89,7 @@ class Graph {
             noStroke();
             fill(0);
             textAlign(CENTER);
-            text(i, x, this.origin.y + 15);
+            text(i / 10, x, this.origin.y + 15);
             pop();
         }
         // Y axis

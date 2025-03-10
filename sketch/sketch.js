@@ -15,7 +15,7 @@ function setup() {
   graph.plot();
 
   sliderX = createSlider(0, width, width - 100);
-  sliderX.position(20, 20);
+  sliderX.position((windowWidth / 2) - (width / 2), 20);
   sliderY = createSlider(0, height, height - 100);
   sliderY.position(20, 50);
 
